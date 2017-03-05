@@ -1,9 +1,35 @@
+//setting up Firebase
+// Initialize Firebase
+var config = {
+  apiKey: "AIzaSyDtw-SvcPLB41RzvESP4A-lmOJQj5qnG0w",
+  authDomain: "simpsons-gif-generator.firebaseapp.com",
+  databaseURL: "https://simpsons-gif-generator.firebaseio.com",
+  storageBucket: "simpsons-gif-generator.appspot.com",
+  messagingSenderId: "988968041445"
+};
+
+firebase.initializeApp(config);
+var database = firebase.database();
+
+
 //giphy logic
 var searchTerms = ['Homer','Marge','Bart','Lisa','Maggie','Grandpa'];
 var keyTerm = 'The+Simpsons';
 var gifsOnPage = false;
 
+
 function initGif() {
+  //check the firebase for searchTerms
+  database.ref().on('value', function(snapshot) {
+    if(snapshot.child('searchTerms').exists()) {
+          console.log('dont exist yet!');
+          searchTerms = snapshot.val().searchTerms;
+      }
+    }, function(errorObject) {
+      // In case of error this will print the error
+      console.log("The read failed: " + errorObject.code);
+    });
+
   //generate initial pills
   for (i=0; i<searchTerms.length; i++) {
     var term = searchTerms[i];
@@ -47,6 +73,13 @@ function addTag(e) {
   e.preventDefault();
   var searchVal = $('.form input').val().trim();
   var bgColor = colorGen();
+  searchTerms.push(searchVal);
+  console.log(searchTerms);
+  database.ref().set({
+    charList: searchTerms
+  });
+  console.log('firebase update!');
+  console.log(searchTerms);
   $('.tags-wrap').append('<li class="tag-item col-xs-6"><button class="tag" style="background-color:'+bgColor+'"data-char="'+ searchVal +'">'+searchVal+'</button></li>');
   callChar(searchVal);
 }
