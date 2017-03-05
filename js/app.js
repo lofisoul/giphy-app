@@ -7,7 +7,8 @@ function initGif() {
   //generate initial pills
   for (i=0; i<searchTerms.length; i++) {
     var term = searchTerms[i];
-    $('.tags-wrap').append('<li class="tag-item"><button class="tag" data-char="'+ term +'">'+term+'</button></li>');
+    var bgColor = colorGen();
+    $('.tags-wrap').append('<li class="tag-item col-xs-6"><button class="tag" style="background-color:'+bgColor+'" data-char="'+ term +'">'+term+'</button></li>');
   }
 
   if(gifsOnPage === false) {
@@ -27,7 +28,7 @@ function callChar(term) {
     .done(function(response) {
       var results = response.data;
       for (var i = 0; i < results.length; i++) {
-        var gifDiv = $("<div class='item'>");
+        var gifDiv = $("<div class='grid-item col-xs-4 col-md-3'>");
         // console.log(results[i]);
         var charImage = $('<img class="gif">');
         charImage.attr({
@@ -45,7 +46,8 @@ function callChar(term) {
 function addTag(e) {
   e.preventDefault();
   var searchVal = $('.form input').val().trim();
-  $('.tags-wrap').append('<li class="tag-item"><button class="tag" data-char="'+ searchVal +'">'+searchVal+'</button></li>');
+  var bgColor = colorGen();
+  $('.tags-wrap').append('<li class="tag-item col-xs-6"><button class="tag" style="background-color:'+bgColor+'" data-char="'+ searchVal +'">'+searchVal+'</button></li>');
 }
 
 function changeDeck() {
@@ -64,6 +66,13 @@ function animateGif() {
       $(this).attr('src', $(this).attr('data-still'));
       $(this).attr('data-state','still');
     }
+}
+
+function colorGen() {
+  var colorWheel = ['#F6C945','#EB5DA0', '#0D81BE', '#BB4A4A','#9E60A2'];
+  var num = Math.floor(Math.random() * (4 - 0 + 1)) + 0;
+  console.log(colorWheel[num]);
+  return colorWheel[num];
 }
 
 $(window).on('load', function(){

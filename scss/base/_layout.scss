@@ -4,12 +4,79 @@ body {
 
 .main {
   background:#fff;
-  margin:40px;
-  padding:25px;
-  @include prefix(transition, transform 3s cubic-bezier($cubicbez), webkit ms moz);
+  margin:40px 0;
+  padding:15px;
+  @include prefix(transition, transform 1s cubic-bezier($cubicbez), webkit ms moz);
   @include prefix(transform, scale(0), webkit ms moz);
 }
 
 .loaded .main {
   @include prefix(transform, scale(1), webkit ms moz);
+}
+
+@media screen and (min-width:768px) {
+  .main {
+    margin:40px;
+    padding:25px;
+  }
+}
+
+.fish-bowl {
+  margin:30px -2px 30px;
+}
+
+.gif-wrap h1 {
+  margin-bottom:10px;
+}
+
+.gif-wrap h2 {
+  color:$yellow;
+}
+
+.grid-item {
+  padding:0 1px;
+}
+
+
+
+// .fish-bowl {
+//   display: flex;
+//   flex-direction: column;
+//   flex-wrap: wrap;
+//   padding: 10px;
+//   height: 100vw;
+// }
+// .grid-item {
+//   display: flex;
+//   flex: 1 1 auto;
+//   width: 33.3%;
+//   margin-bottom: 10px;
+//   border-radius: 10px;
+// }
+
+.fish-bowl img {
+  width:100%;
+  margin:0 -1px;
+}
+
+.tags-wrap > li {
+  padding:0 1px;
+  margin-bottom:2px;
+}
+
+.tags-wrap button {
+  font-weight:900;
+  display:block;
+  width:100%;
+  letter-spacing:1px;
+  border:0;
+  color:#fff;
+  background:none;
+  opacity:.8;
+  @include prefix(transform, scale(1), webkit ms moz);
+  @include prefix(transition, all .12s cubic-bezier($cubicbez), webkit ms moz);
+  &:hover {
+    opacity:1;
+    @include prefix(transform, scale(1.05), webkit ms moz);
+  }
 }
