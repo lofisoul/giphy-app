@@ -28,7 +28,7 @@ function callChar(term) {
     .done(function(response) {
       var results = response.data;
       for (var i = 0; i < results.length; i++) {
-        var gifDiv = $("<div class='grid-item col-xs-4 col-md-3'>");
+        var gifDiv = $("<div class='grid-item col-xs-6 col-md-4'>");
         // console.log(results[i]);
         var charImage = $('<img class="gif">');
         charImage.attr({
@@ -47,7 +47,8 @@ function addTag(e) {
   e.preventDefault();
   var searchVal = $('.form input').val().trim();
   var bgColor = colorGen();
-  $('.tags-wrap').append('<li class="tag-item col-xs-6"><button class="tag" style="background-color:'+bgColor+'" data-char="'+ searchVal +'">'+searchVal+'</button></li>');
+  $('.tags-wrap').append('<li class="tag-item col-xs-6"><button class="tag" style="background-color:'+bgColor+'"data-char="'+ searchVal +'">'+searchVal+'</button></li>');
+  callChar(searchVal);
 }
 
 function changeDeck() {
@@ -69,8 +70,8 @@ function animateGif() {
 }
 
 function colorGen() {
-  var colorWheel = ['#F6C945','#EB5DA0', '#0D81BE', '#BB4A4A','#9E60A2'];
-  var num = Math.floor(Math.random() * (4 - 0 + 1)) + 0;
+  var colorWheel = ['#F6C945','#EB5DA0', '#0D81BE','#9E60A2'];
+  var num = Math.floor(Math.random() * (3 - 0 + 1)) + 0;
   console.log(colorWheel[num]);
   return colorWheel[num];
 }

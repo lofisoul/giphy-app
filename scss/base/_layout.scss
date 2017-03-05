@@ -35,6 +35,7 @@ body {
 
 .grid-item {
   padding:0 1px;
+  margin-bottom:2px
 }
 
 
@@ -54,8 +55,18 @@ body {
 //   border-radius: 10px;
 // }
 
+.form {
+  margin-bottom:30px;
+  padding-bottom:30px;
+  border-bottom:1px solid #f7f7f7;
+}
+
 .fish-bowl img {
   width:100%;
+  margin:0 -1px;
+}
+
+.tags-wrap {
   margin:0 -1px;
 }
 
@@ -68,15 +79,28 @@ body {
   font-weight:900;
   display:block;
   width:100%;
+  text-transform:uppercase;
   letter-spacing:1px;
   border:0;
   color:#fff;
   background:none;
   opacity:.8;
+  position:relative;
+  z-index: 1;
   @include prefix(transform, scale(1), webkit ms moz);
   @include prefix(transition, all .12s cubic-bezier($cubicbez), webkit ms moz);
   &:hover {
+    z-index:2;
     opacity:1;
     @include prefix(transform, scale(1.05), webkit ms moz);
   }
+}
+
+.info-wrap h2 {
+  font-weight:900;
+  font-size:20px;
+  color:$yellow;
+  padding:10px;
+  margin-bottom:10px;
+  background:$purple;
 }
