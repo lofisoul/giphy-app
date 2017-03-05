@@ -1,0 +1,66 @@
+//form
+.form ul {
+  background:#fff;
+  margin-bottom:1em;
+}
+
+.form li {
+  border:1px solid #efefef;
+  position:relative;
+  margin-bottom:0;
+}
+
+//form els
+label, input, textarea {
+  display:block;
+  border:0;
+}
+
+input {
+  width:100%;
+  height:100%;
+  padding:2em 1em 1.5em;
+  outline:0;
+}
+
+label {
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  position:absolute;
+  color:$mint;
+  opacity:1;
+  top:1.1em;
+  left:1.1em;
+  -webkit-transition:opacity .3s ease-in-out, top .3s ease-in-out;
+  transition:opacity .3s ease-in-out, top .3s ease-in-out;
+}
+
+input[type="submit"] {
+    @include prefix(transition, transform .3s cubic-bezier($cubicbez), webkit ms moz);
+    background: $mint;
+    margin-bottom: 1em;
+    color: white;
+    border-radius: 3px;
+    padding: .75em;
+    -webkit-appearance: none; /* remove default browser <button> styling */
+}
+input[type="submit"]:hover {
+    -webkit-transform: scale(1.025);
+    transform: scale(1.025);
+    cursor: pointer;
+}
+input[type="submit"]:active {
+    -webkit-transform: scale(.975);
+    transform: scale(.975);
+}
+
+//interactive css
+.js-hide-label label {
+    opacity: 0;
+    top: 1.5em
+}
+
+.js-unhighlight-label label {
+    color: #ccc;
+}
