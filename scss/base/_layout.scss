@@ -6,6 +6,8 @@ body {
   background:#fff;
   margin:40px 0;
   padding:15px;
+  border-radius: 5px;
+  box-shadow:2px 4px 10px 0px rgba(0,0,0,.5);
   @include prefix(transition, transform 1s cubic-bezier($cubicbez), webkit ms moz);
   @include prefix(transform, scale(0), webkit ms moz);
 }
@@ -73,6 +75,15 @@ body {
 .tags-wrap > li {
   padding:0 1px;
   margin-bottom:2px;
+  position:relative;
+  @include prefix(transform, scale(1), webkit ms moz);
+  @include prefix(transition, all .12s cubic-bezier($cubicbez), webkit ms moz);
+  opacity:1;
+  &.removeTag {
+    top:15%;
+    opacity:0;
+    @include prefix(transform, scale(0), webkit ms moz);
+  }
 }
 
 .tags-wrap button {
@@ -94,7 +105,16 @@ body {
     opacity:1;
     @include prefix(transform, scale(1.05), webkit ms moz);
   }
+  & > em {
+    position:absolute;
+    line-height: 25px;
+    width:25px;
+    height:25px;
+    display:block;
+    z-index:5;
+  }
 }
+
 
 .info-wrap h2 {
   font-weight:900;

@@ -17,25 +17,31 @@ var searchTerms = ['Homer','Marge','Bart','Lisa','Maggie','Grandpa'];
 var keyTerm = 'The+Simpsons';
 var gifsOnPage = false;
 
+function pillGen(arr) {
+  $('.tags-wrap').empty();
+  for (i=0; i<arr.length; i++) {
+    var term = arr[i];
+    var bgColor = colorGen();
+    $('.tags-wrap').append('<li class="tag-item col-xs-12 col-sm-6 col-md-12"><button class="tag" style="background-color:'+bgColor+'" data-char="'+ term +'"><em class="fa fa-close"></em>'+term+'</button></li>');
+  }
+}
 
 function initGif() {
   //check the firebase for searchTerms
   database.ref().on('value', function(snapshot) {
-    if(snapshot.child('searchTerms').exists()) {
-          console.log('dont exist yet!');
+    if(snapshot.child('charList').exists()) {
           searchTerms = snapshot.val().charList;
+          pillGen(searchTerms);
+          database.ref().off();
       }
+    else {
+        return;
+    }
     }, function(errorObject) {
       // In case of error this will print the error
       console.log("The read failed: " + errorObject.code);
     });
 
-  //generate initial pills
-  for (i=0; i<searchTerms.length; i++) {
-    var term = searchTerms[i];
-    var bgColor = colorGen();
-    $('.tags-wrap').append('<li class="tag-item col-xs-6"><button class="tag" style="background-color:'+bgColor+'" data-char="'+ term +'">'+term+'</button></li>');
-  }
 
   if(gifsOnPage === false) {
       callChar('Homer');
@@ -46,7 +52,6 @@ function initGif() {
 function callChar(term) {
   $('.fish-bowl').empty();
   var queryURL = 'https://api.giphy.com/v1/gifs/search?q=' + term + '+' + keyTerm + '&api_key=dc6zaTOxFJmzC&limit=10';
-  console.log(queryURL);
   $.ajax({
       url: queryURL,
       method: "GET"
@@ -74,14 +79,30 @@ function addTag(e) {
   var searchVal = $('.form input').val().trim();
   var bgColor = colorGen();
   searchTerms.push(searchVal);
-  console.log(searchTerms);
   database.ref().set({
     charList: searchTerms
   });
-  console.log('firebase update!');
-  console.log(searchTerms);
-  $('.tags-wrap').append('<li class="tag-item col-xs-6"><button class="tag" style="background-color:'+bgColor+'"data-char="'+ searchVal +'">'+searchVal+'</button></li>');
+  $('.tags-wrap').append('<li class="tag-item col-xs-12 col-sm-6 col-md-12"><button class="tag" style="background-color:'+bgColor+'"data-char="'+ searchVal +'"><em class="fa fa-close"></em>'+searchVal+'</button></li>');
   callChar(searchVal);
+}
+
+function removeTag(e) {
+  e.preventDefault();
+  var searchVal = $(this).parent().attr('data-char');
+  $(this).parents('li').addClass('removeTag');
+  $(this).parents('li').on('transitionend', function() {
+      $(this).remove();
+      var index = searchTerms.indexOf(searchVal);
+      console.log(index);
+      if (index > -1) {
+        searchTerms.splice(index, 1);
+        console.log('yup!' + searchTerms);
+      }
+      database.ref().set({
+        charList: searchTerms
+      });
+  });
+
 }
 
 function changeDeck() {
@@ -105,7 +126,6 @@ function animateGif() {
 function colorGen() {
   var colorWheel = ['#F6C945','#EB5DA0', '#0D81BE','#9E60A2'];
   var num = Math.floor(Math.random() * (3 - 0 + 1)) + 0;
-  console.log(colorWheel[num]);
   return colorWheel[num];
 }
 
@@ -117,6 +137,7 @@ initGif();
 $('.fish-bowl').on('click', '.gif', animateGif);
 $('.add-term').on('click', addTag);
 $('.tags-wrap').on('click', '.tag', changeDeck);
+$('.tags-wrap').on('click', 'em', removeTag);
 
 //form effects -> copied from personal codepen
 
