@@ -23,7 +23,7 @@ function initGif() {
   database.ref().on('value', function(snapshot) {
     if(snapshot.child('searchTerms').exists()) {
           console.log('dont exist yet!');
-          searchTerms = snapshot.val().searchTerms;
+          searchTerms = snapshot.val().charList;
       }
     }, function(errorObject) {
       // In case of error this will print the error
